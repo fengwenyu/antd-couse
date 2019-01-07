@@ -1,3 +1,7 @@
+import {
+  FormattedMessage,
+} from 'umi/locale';
+
 export default () => {
-	return <div>Hello World!</div>
+  return <div><FormattedMessage id="helloworld" /></div>;
 }
