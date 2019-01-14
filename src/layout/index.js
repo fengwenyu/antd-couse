@@ -30,7 +30,7 @@ export default class BasicLayout extends Component {
         </Sider>
         <Layout >
           <Header style={{ background: '#fff', textAlign: 'center', padding: 0 }}>Header</Header>
-          <Content style={{ margin: '24px 16px 0' }}>
+          <Content id={"mountNode"} style={{ margin: '24px 16px 0' }}>
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
               {this.props.children}
             </div>
