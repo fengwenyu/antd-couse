@@ -36,8 +36,9 @@ export default {
         ]
     }],
     proxy:{
-        '/test':{
-            target:'http://114.116.89.193:8999',
+
+        '/hello':{
+            target:'http://localhost:8085',
             changeOrigin: true,
         },
     }

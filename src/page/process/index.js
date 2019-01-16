@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { Table } from 'antd';
 import { connect } from 'dva';
@@ -6,6 +5,8 @@ import '../../app.css';
 import './process.css';
 import { DatePicker } from 'antd';
 import { Form, Row, Col, Input, Button, Icon,} from 'antd';
+import React, { Component }  from 'react'
+import 'whatwg-fetch'
 
 function onChange(date, dateString) {
     console.log(date, dateString);
@@ -65,32 +66,34 @@ const columns = [{
     key: 'sourceType',
 },{
     title: '状态',
-    dataIndex: 'status',
-    key: 'status',
+    dataIndex: 'statusMsg',
+    key: 'statusMsg',
 },{
     title: '操作',
     key: 'action',
     render: (text, record) => (
-        <span>
-      {/*<a href="javascript:;">Invite {record.name}</a>
-      <Divider type="vertical" />
-      <a href="javascript:;">Delete</a>*/}
-    </span>
-    ),
+        getOperate(record.status)
+    )
+
 }];
 
-const data = [{
-    goodsNo: '100835',
-    goodsName: '测试商品',
-    num: '32',
-    sourceId: '800323',
-    sourceName: '澳洲 安格斯牛排',
-    sourceNum: '54',
-    unit: 'kg',
-    boxRule: '1',
-    sourceType: '主材',
-    status: getStatus('1'),
-}];
+function getOperate(status){
+    if(status==='1'){
+        return <Button
+            type="primary"
+            htmlType="submit">
+            禁用
+        </Button>
+    }else{
+        return <Button
+            type="primary"
+            htmlType="submit">
+            开启
+        </Button>
+    }
+}
+
+
 function getStatus(status) {
     if(!status){
         return "未知";
@@ -101,7 +104,7 @@ function getStatus(status) {
         case '1':
             statusMsg = "正常";
             break;
-        case 2:
+        case '2':
             statusMsg = "废弃";
             break;
         default:
@@ -115,6 +118,9 @@ class Process extends React.Component {
         expand: false,
         deptNo:"",
         goodsNo:"",
+        data: [],
+        pagination: {},
+        loading: false,
     };
 
     handleSearch = (e) => {
@@ -123,6 +129,33 @@ class Process extends React.Component {
         this.props.form.validateFields((err, values) => {
             console.log('Received values of form: ', values);
         });
+        fetch("/hello/process/data",{
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({"aa":"bb"})
+        })
+        .then(function(response) {
+            return response.json()
+        }).then((json) => {
+            console.log('parsing success', json);
+            if(json!=null && json.length>0){
+                for(var i=0;i<json.length;i++){
+                    json[i].statusMsg=getStatus(json[i].status);
+                }
+                this.setState({
+                    loading: false,
+                    data: json
+                });
+            }else {
+
+            }
+
+        }).catch(function(ex) {
+            console.log('parsing failed', ex)
+        })
     };
 
     handleReset = () => {
@@ -178,7 +211,8 @@ class Process extends React.Component {
                         </Button>
                     </Form.Item>
                 </Form>
-                <Table columns={columns} dataSource={data} />
+                <Table columns={columns} dataSource={this.state.data} pagination={this.state.pagination}
+                       loading={this.state.loading} />
             </span>
         );
     }
