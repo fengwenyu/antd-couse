@@ -37,9 +37,12 @@ export default {
     }],
     proxy:{
 
-        '/hello':{
+        '/api':{
             target:'http://localhost:8085',
             changeOrigin: true,
+            "pathRewrite": {
+                "/api": "/"
+            }
         },
     }
 };

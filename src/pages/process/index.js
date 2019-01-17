@@ -129,7 +129,7 @@ class Process extends React.Component {
         this.props.form.validateFields((err, values) => {
             console.log('Received values of form: ', values);
         });
-        fetch("/hello/process/data",{
+        fetch("/api/hello/process/data",{
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -221,12 +221,12 @@ class Process extends React.Component {
 
 
 
-export default Process;
 
 const WrappedAdvancedSearchForm = Form.create({ name: 'advanced_search' })(Process);
+export default WrappedAdvancedSearchForm;
 ReactDOM.render(
     <div>
         <WrappedAdvancedSearchForm />
         <div className="search-result-list">Search Result List</div>
-    </div>,document.body
+    </div>,document.getElementById('root')
 );
