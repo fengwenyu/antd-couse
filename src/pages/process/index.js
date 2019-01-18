@@ -191,14 +191,14 @@ class Process extends React.Component {
                         {getFieldDecorator('deptNo', {
                             rules: [{ required: true, message: '请输入部门编号!' }],
                         })(
-                            <Input  style={{ color: 'rgba(0,0,0,.25)' }} size="small" value={this.state.deptNo} placeholder="请输入部门编号" onChange={this.deptNoChange} />
+                            <Input  style={{ color: 'rgba(0,0,0,.25)' }} size="small"  placeholder="请输入部门编号" onChange={this.deptNoChange} />
                         )}
                     </Form.Item>
                     <Form.Item label="商品编码：">
                         {getFieldDecorator('goodsNo', {
                             rules: [{ required: true, message: '请输入商品编码!' }],
                         })(
-                            <Input style={{  color: 'rgba(0,0,0,.25)' }}  size="small" value={this.state.goodsNo} placeholder="请输入商品编码" onChange={this.goodsNoChange} />
+                            <Input style={{  color: 'rgba(0,0,0,.25)' }}  size="small"  placeholder="请输入商品编码" onChange={this.goodsNoChange} />
                         )}
                     </Form.Item>
                     <Form.Item>
